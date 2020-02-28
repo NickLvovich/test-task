@@ -11,7 +11,7 @@ class RegisterLogin extends Component {
   };
 
   componentDidMount() {
-    document.title = "John Ahn | Login";
+    document.title = "Login";
   }
 
   displayErrors = errors =>

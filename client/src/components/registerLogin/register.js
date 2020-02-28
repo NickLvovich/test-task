@@ -14,7 +14,7 @@ class Register extends Component {
   };
 
   componentDidMount() {
-    document.title = "John Ahn | Register";
+    document.title = "Register";
   }
 
   isFormValid = () => {
