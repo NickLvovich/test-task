@@ -16,6 +16,7 @@
   "author": "Nickolaj Shilov",
   "license": "ISC",
   "dependencies": {
+    "antd": "^4.0.0",
     "bcrypt": "^3.0.8",
     "body-parser": "^1.18.3",
     "concurrently": "^5.1.0",

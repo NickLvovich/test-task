@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 
 const { User } = require("./models/user");
+const { Friend } = require("./models/friend");
 const { auth } = require("./middleware/auth");
 
 mongoose
@@ -19,7 +20,6 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
 
 app.get("/api/users/auth", auth, (req, res) => {
   res.status(200).json({
@@ -38,6 +38,17 @@ app.post("/api/users/register", (req, res) => {
     res.status(200).json({
       success: true,
       userData: doc
+    });
+  });
+});
+
+app.post("/api/friends/new-friend", (req, res) => {
+  const friend = new Friend(req.body);
+  friend.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({
+      success: true,
+      friendData: doc
     });
   });
 });
@@ -67,6 +78,49 @@ app.post("/api/users/login", (req, res) => {
   });
 });
 
+
+
+app.post("/api/friends/request_apply", (req, res) => {
+  Friend.findOneAndUpdate(
+    { _id: req.body._id },
+    { status: "approved" },
+    (err, friend) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({
+        success: true,
+        friendData: friend
+      });
+    }
+  );
+});
+
+app.post("/api/friends/remove_any_friend_or_request", (req, res) => {
+  Friend.remove(
+    { _id: req.body._id },
+    (err, friend) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({
+        success: true,
+        friendData: friend
+      });
+    }
+  );
+})
+
+app.get("/api/users/find_user", (req, res) => {
+  User.findOne({ name: req.body.name}, (err, user) => {
+    if (!user)
+      return res.json({
+        searchingSuccess: false,
+        messsage: "Searching failed, person not found, or u need more arguments"
+      });
+      res.status(200).json({
+        success: true,
+        userData: user
+      });
+  });
+});
+
 app.get("/api/users/logout", auth, (req, res) => {
   User.findByIdAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
     if (err) return res.json({ success: false, err });
@@ -76,8 +130,8 @@ app.get("/api/users/logout", auth, (req, res) => {
   });
 });
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
-  console.log(`server running at ${port}`)
+  console.log(`server running at ${port}`);
 });

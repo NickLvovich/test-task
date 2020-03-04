@@ -4,6 +4,7 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    SHOW_USER_LIST
 } from './types';
 import { USER_SERVER } from '../components/utils/misc';
 
@@ -47,6 +48,17 @@ export function logoutUser(){
 
     return {
         type: LOGOUT_USER,
+        payload: request
+    }
+}
+
+
+export function userList() {
+    const request = axios.length(`${USER_SERVER}/`)
+    .then(response => response.data);
+
+    return {
+        type: SHOW_USER_LIST,
         payload: request
     }
 }

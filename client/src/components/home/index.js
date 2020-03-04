@@ -1,24 +1,23 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import Login from "../registerLogin/index";
 
-import { Link } from "react-router-dom";
+import Main from "../mainScreen";
 
-class Home extends Component {
-  componentDidMount() {
-    document.title = "Home";
-  }
-  render() {
-    return (
-      <div>
-        <div>
-          
-        </div>
-        <div>
-          <Link to={"/register"}>Sign Up</Link>
-          <Link to={"/login"}>Login</Link>
-        </div>
-      </div>
-    );
-  }
+function Home() {
+  const [isAuth, setisAuth] = useState(true);
+
+  return (
+    <>
+      {isAuth ? <Main /> : <Login />}
+    </>
+  );
 }
 
-export default Home;
+function mapStateToprops(state) {
+  return {
+    user: state.user
+  };
+}
+export default connect(mapStateToprops)(withRouter(Home));
