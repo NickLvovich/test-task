@@ -2,10 +2,19 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_USER,
-  LOGOUT_USER
+  LOGOUT_USER,
+  SHOW_LIST_OF_USERS
 } from "../actions/types";
 
-export default function(state = {}, action) {
+
+const initialState = {
+  pending: false,
+  users: [],
+  error: null
+}
+
+export default function(state = initialState, action) {
+  console.log('users', state.users)
   switch (action.type) {
     case REGISTER_USER:
       return { ...state, register: action.payload };
@@ -15,7 +24,10 @@ export default function(state = {}, action) {
       return { ...state, userData: action.payload };
     case LOGOUT_USER:
       return { ...state };
+    case SHOW_LIST_OF_USERS:
+      return {...state, users: action.payload}
     default:
       return state;
   }
 }
+

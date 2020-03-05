@@ -1,5 +1,11 @@
 import axios from "axios";
-import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from "./types";
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  LOGOUT_USER,
+  SHOW_LIST_OF_USERS
+} from "./types";
 import { USER_SERVER, FRIEND_SERVER } from "../../components/Config";
 
 export function registerUser(dataToSubmit) {
@@ -42,6 +48,17 @@ export function logoutUser() {
 
   return {
     type: LOGOUT_USER,
+    payload: request
+  };
+}
+
+export function fetchUsers() {
+  const request = axios
+    .get(`${USER_SERVER}/usersList`)
+    .then(response => response.data);
+    console.log('request',request)
+  return {
+    type: SHOW_LIST_OF_USERS,
     payload: request
   };
 }

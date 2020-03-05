@@ -1,14 +1,14 @@
 import React from "react";
 
-const LandingPage = () => {
+const FriendsPage = () => {
   return (
     <div>
       <div className="app">
         <br />
-        <span style={{ fontSize: "2rem" }}>users</span>
+        <span style={{ fontSize: "2rem" }}>Friends</span>
       </div>
     </div>
   );
 };
 
-export default LandingPage;
+export default FriendsPage;
