@@ -1,134 +1,43 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
+const path = require("path");
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cors = require('cors')
 
 const config = require("./config/key");
 
-const { User } = require("./models/user");
-const { Friend } = require("./models/friend");
-const { auth } = require("./middleware/auth");
-
-mongoose
-  .connect(config.mongoURI, {
-    useNewUrlParser: true
+const mongoose = require("mongoose")
+const connect = mongoose.connect(config.mongoURI,
+  {
+    useNewUrlParser: true, useUnifiedTopology: true,
+    useCreateIndex: true, useFindAndModify: false
   })
-  .then(() => console.log("pajilaya baza zdes"))
-  .catch(err => console.log(err));
+  .then(() => console.log('Connection has been done'))
+  .catch(err => console.log(err))
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.get("/api/users/auth", auth, (req, res) => {
-  res.status(200).json({
-    _id: req._id,
-    isAuth: true,
-    email: req.user.email,
-    name: req.user.name,
-    lastname: req.user.lastname
+app.use('/api/users', require('./routes/users'));
+
+//https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
+app.use("/uploads", express.static("uploads"));
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  // index.html for all page routes
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
-});
-
-app.post("/api/users/register", (req, res) => {
-  const user = new User(req.body);
-  user.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
-    res.status(200).json({
-      success: true,
-      userData: doc
-    });
-  });
-});
-
-app.post("/api/friends/new-friend", (req, res) => {
-  const friend = new Friend(req.body);
-  friend.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
-    res.status(200).json({
-      success: true,
-      friendData: doc
-    });
-  });
-});
-
-app.post("/api/users/login", (req, res) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (!user)
-      return res.json({
-        loginSuccess: false,
-        messsage: "Auth failed, email not found"
-      });
-
-    user.comparePassword(req.body.password, (err, isMatch) => {
-      if (!isMatch) {
-        return res.json({ loginSuccess: false, messsage: "wrong password" });
-      }
-    });
-    user.generateToken((err, user) => {
-      if (err) return res.status(400).send(err);
-      res
-        .cookie("x_auth", user.token)
-        .status(200)
-        .json({
-          loginSuccess: true
-        });
-    });
-  });
-});
-
-
-
-app.post("/api/friends/request_apply", (req, res) => {
-  Friend.findOneAndUpdate(
-    { _id: req.body._id },
-    { status: "approved" },
-    (err, friend) => {
-      if (err) return res.json({ success: false, err });
-      res.status(200).json({
-        success: true,
-        friendData: friend
-      });
-    }
-  );
-});
-
-app.post("/api/friends/remove_any_friend_or_request", (req, res) => {
-  Friend.remove(
-    { _id: req.body._id },
-    (err, friend) => {
-      if (err) return res.json({ success: false, err });
-      res.status(200).json({
-        success: true,
-        friendData: friend
-      });
-    }
-  );
-})
-
-app.get("/api/users/find_user", (req, res) => {
-  User.findOne({ name: req.body.name}, (err, user) => {
-    if (!user)
-      return res.json({
-        searchingSuccess: false,
-        messsage: "Searching failed, person not found, or u need more arguments"
-      });
-      res.status(200).json({
-        success: true,
-        userData: user
-      });
-  });
-});
-
-app.get("/api/users/logout", auth, (req, res) => {
-  User.findByIdAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).send({
-      success: true
-    });
-  });
-});
+}
 
 const port = process.env.PORT || 5000;
 
