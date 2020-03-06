@@ -56,7 +56,6 @@ export function fetchUsers() {
   const request = axios
     .get(`${USER_SERVER}/usersList`)
     .then(response => response.data);
-    console.log('request',request)
   return {
     type: SHOW_LIST_OF_USERS,
     payload: request

@@ -14,7 +14,6 @@ const initialState = {
 }
 
 export default function(state = initialState, action) {
-  console.log('users', state.users)
   switch (action.type) {
     case REGISTER_USER:
       return { ...state, register: action.payload };
