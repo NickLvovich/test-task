@@ -3,15 +3,16 @@ import {
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
-  SHOW_LIST_OF_USERS
+  SHOW_LIST_OF_USERS,
+  FIND_USER
 } from "../actions/types";
-
 
 const initialState = {
   pending: false,
   users: [],
-  error: null
-}
+  error: null,
+  user: []
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -21,12 +22,13 @@ export default function(state = initialState, action) {
       return { ...state, loginSucces: action.payload };
     case AUTH_USER:
       return { ...state, userData: action.payload };
+    case SHOW_LIST_OF_USERS:
+      return { ...state, users: action.payload };
+    case FIND_USER:
+      return { ...state, user: action.payload };
     case LOGOUT_USER:
       return { ...state };
-    case SHOW_LIST_OF_USERS:
-      return {...state, users: action.payload}
     default:
       return state;
   }
 }
-

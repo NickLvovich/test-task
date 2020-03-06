@@ -54,7 +54,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/find_user", (req, res) => {
+router.post("/find_user", (req, res) => {
   User.findOne({ name: req.body.name }, (err, user) => {
     if (!user)
       return res.json({
@@ -62,7 +62,6 @@ router.get("/find_user", (req, res) => {
         messsage: "Searching failed, person not found, or u need more arguments"
       });
     res.status(200).json({
-      success: true,
       userData: user
     });
   });

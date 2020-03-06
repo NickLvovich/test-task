@@ -4,7 +4,8 @@ import {
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
-  SHOW_LIST_OF_USERS
+  SHOW_LIST_OF_USERS,
+  FIND_USER
 } from "./types";
 import { USER_SERVER, FRIEND_SERVER } from "../../components/Config";
 
@@ -60,4 +61,16 @@ export function fetchUsers() {
     type: SHOW_LIST_OF_USERS,
     payload: request
   };
+}
+
+export function findUser(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/find_user`, dataToSubmit)
+    .then(response => response.data);
+  return {
+    type: FIND_USER,
+    payload: request
+  };
+  
+
 }
