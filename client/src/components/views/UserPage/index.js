@@ -6,7 +6,7 @@ import * as _ from "lodash";
 import "./users.scss";
 import { Formik } from "formik";
 
-import { Button, Input, Form } from "antd";
+import { Input, Form } from "antd";
 
 const UserPage = () => {
   let userListObj = useSelector(state => state.user.users);
@@ -22,7 +22,6 @@ const UserPage = () => {
   
   
 
-  console.log("inputUser", inputUser);
   useEffect(() => {
     dispatch(fetchUsers())
       .then(response => response.data)
@@ -76,25 +75,25 @@ const UserPage = () => {
       </div>
 
       <div className="user-container">
-        {inputUser.length == 1
-          ? inputUser.map(user => (
-              <div key={user._id} className="users">
-                <div className="user-information">
-                  <img src={user.image} />
-                  <h3>{user.name}</h3>
-                </div>
-                <div className="friends-information"></div>
+        {inputUser <= 1
+          ? userList.map(user => (
+            <div key={user._id} className="users">
+              <div className="user-information">
+                <img src={user.image} />
+                <h3>{user.name}</h3>
               </div>
-            ))
-          : userList.map(user => (
-              <div key={user._id} className="users">
-                <div className="user-information">
-                  <img src={user.image} />
-                  <h3>{user.name}</h3>
-                </div>
-                <div className="friends-information"></div>
+              <div className="friends-information"></div>
+            </div>
+          ))
+          : inputUser[0].map(user => (
+            <div key={user._id} className="users">
+              <div className="user-information">
+                <img src={user.image} />
+                <h3>{user.name}</h3>
               </div>
-            ))}
+              <div className="friends-information"></div>
+            </div>
+          ))}
       </div>
     </div>
   );

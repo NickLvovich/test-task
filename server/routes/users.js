@@ -55,7 +55,7 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/find_user", (req, res) => {
-  User.findOne({ name: req.body.name }, (err, user) => {
+  User.find({ name: req.body.name }, (err, user) => {
     if (!user)
       return res.json({
         searchingSuccess: false,
