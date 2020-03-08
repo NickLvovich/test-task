@@ -11,7 +11,10 @@ const initialState = {
   pending: false,
   users: [],
   error: null,
-  user: []
+  user: [],
+  register: [],
+  loginSucces: [],
+  userData: []
 };
 
 export default function(state = initialState, action) {

@@ -7,7 +7,7 @@ import {
   SHOW_LIST_OF_USERS,
   FIND_USER
 } from "./types";
-import { USER_SERVER, FRIEND_SERVER } from "../../components/Config";
+import { USER_SERVER } from "../../components/Config";
 
 export function registerUser(dataToSubmit) {
   const request = axios
@@ -71,6 +71,5 @@ export function findUser(dataToSubmit) {
     type: FIND_USER,
     payload: request
   };
-  
-
 }
+

@@ -1,28 +1,32 @@
-.container{
-    width: 40vw;
-    margin: 30px auto;
-    .button-block{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        input {
-            display: flex;
-            margin-right: 10px;
-            width: 50vw;
-        }
+.container {
+  width: 40vw;
+  margin: 30px auto;
+  .button-block {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    input {
+      display: flex;
+      margin-right: 10px;
+      width: 50vw;
     }
+  }
 
-    .user-container {
-        margin-top: 50px;
-        .user-information {
-          display: flex;
-          align-items: center;
-          justify-content: start;
-          margin-bottom: 10px;
-          img {
-            margin-right: 10px;
-          }
+  .user-container {
+    margin-top: 50px;
+    .users {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .user-information {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        margin-bottom: 10px;
+        img {
+          margin-right: 10px;
         }
       }
+    }
+  }
 }
-

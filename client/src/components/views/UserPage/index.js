@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Formik } from "formik";
+import { Input, Form } from "antd";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, findUser } from "../../../Redux/actions/user_actions";
+import { fetchFriendsList } from "../../../Redux/actions/friends_actions";
 import * as _ from "lodash";
+
 import "./users.scss";
-import { Formik } from "formik";
 
-import { Input, Form } from "antd";
+const UserPage = props => {
+  const currentUser = props.user.userData._id;
 
-const UserPage = () => {
+  let friendsListObj = useSelector(state => state.friends.friends);
   let userListObj = useSelector(state => state.user.users);
   let inputUserObj = useSelector(state => state.user.user);
 
@@ -17,10 +21,12 @@ const UserPage = () => {
   );
 
   const dispatch = useDispatch();
+
   const userList = _.values(userListObj);
-  const inputUser = _.values(inputUserObj)
-  
-  
+  const inputUser = _.values(inputUserObj);
+  const friendsList = _.values(friendsListObj);
+
+  console.log("friendsListObj", friendsListObj);
 
   useEffect(() => {
     dispatch(fetchUsers())
@@ -32,6 +38,14 @@ const UserPage = () => {
         }, 1000);
       });
 
+    dispatch(fetchFriendsList())
+      .then(response => response.data)
+      .catch(err => {
+        setFormErrorMessage("There is no data, or problems with receiving it");
+        setTimeout(() => {
+          setFormErrorMessage("");
+        }, 1000);
+      });
   }, []);
 
   return (
@@ -41,8 +55,8 @@ const UserPage = () => {
           initialValues={{ name: "name" }}
           onSubmit={(values, { setSubmitting }) => {
             let dataToSubmit = {
-               name: values.name
-            }
+              name: values.name
+            };
             dispatch(findUser(dataToSubmit))
               .then(response => response.payload.user)
               .catch(err => {
@@ -77,23 +91,40 @@ const UserPage = () => {
       <div className="user-container">
         {inputUser <= 1
           ? userList.map(user => (
-            <div key={user._id} className="users">
-              <div className="user-information">
-                <img src={user.image} />
-                <h3>{user.name}</h3>
+              <div key={user._id} className="users">
+                <div className="user-information">
+                  <img src={user.image} />
+                  <div className="close-information">
+                    <h3>{user.name}</h3>
+                    <p>{currentUser === user._id ? "You" : null}</p>
+                  </div>
+                </div>
+                <div className="friends-information">
+                  {friendsList.map(friend => (
+                    <div key={friend._id} className="information">
+                      {user._id === friend.secondUserID ? <div className="status">{friend.status}</div> : null }
+                      
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="friends-information"></div>
-            </div>
-          ))
+            ))
           : inputUser[0].map(user => (
-            <div key={user._id} className="users">
-              <div className="user-information">
-                <img src={user.image} />
-                <h3>{user.name}</h3>
+              <div key={user._id} className="users">
+                <div className="user-information">
+                  <img src={user.image} />
+                  <h3>{user.name}</h3>
+                </div>
+                <div className="friends-information">
+                {friendsList.map(friend => (
+                    <div key={friend._id} className="information">
+                      {user._id === friend.secondUserID ? <div className="status">{friend.status}</div> : null }
+                      
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="friends-information"></div>
-            </div>
-          ))}
+            ))}
       </div>
     </div>
   );

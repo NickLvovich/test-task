@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const friendSchema = mongoose.Schema({
-    firstUserID: Number,
-    secondUserID: Number,
+    firstUserID: String,
+    secondUserID: String,
     created: {
         type: Date,
         default: Date.now
