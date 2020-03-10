@@ -4,7 +4,8 @@ import RightMenu from './Sections/RightMenu';
 import { Drawer, Button, Icon } from 'antd';
 import './Sections/NavBar.css';
 
-function NavBar() {
+function NavBar(props) {
+  console.log('props', props)
     const [visible, setVisible] = useState(false);
     function showDrawer() {
         setVisible(true)

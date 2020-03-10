@@ -10,10 +10,12 @@ import NavBar from "./views/NavBar";
 import Footer from "./views/Footer"
 import FriendsPage from './views/FriendsPage'
 
+console.log('Auth', {Auth})
+
 function App() {
   return (
     <Suspense fallback={<div> Please wait.. </div>}>
-      <NavBar/>
+      <NavBar />
       <div style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
         <Switch>
           <Route exact path="/" component={Auth(HomePage, null)} />

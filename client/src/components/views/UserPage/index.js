@@ -4,13 +4,21 @@ import { Input, Form } from "antd";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, findUser } from "../../../Redux/actions/user_actions";
-import { fetchFriendsList } from "../../../Redux/actions/friends_actions";
+import {
+  fetchFriendsList,
+  addFriend
+} from "../../../Redux/actions/friends_actions";
 import * as _ from "lodash";
 
 import "./users.scss";
 
+import AddFriend from "../AddFriend/AddFriend";
+import StatusLine from "../StatusLine/statusLine";
+
 const UserPage = props => {
   const currentUser = props.user.userData._id;
+
+  console.log("currentUser", currentUser);
 
   let friendsListObj = useSelector(state => state.friends.friends);
   let userListObj = useSelector(state => state.user.users);
@@ -26,8 +34,8 @@ const UserPage = props => {
   const inputUser = _.values(inputUserObj);
   const friendsList = _.values(friendsListObj);
 
-  console.log("friendsListObj", friendsListObj);
-
+  console.log("friendsList", friendsList);
+  console.log("userList", userList);
   useEffect(() => {
     dispatch(fetchUsers())
       .then(response => response.data)
@@ -90,25 +98,40 @@ const UserPage = props => {
 
       <div className="user-container">
         {inputUser <= 1
-          ? userList.map(user => (
-              <div key={user._id} className="users">
-                <div className="user-information">
-                  <img src={user.image} />
-                  <div className="close-information">
-                    <h3>{user.name}</h3>
-                    <p>{currentUser === user._id ? "You" : null}</p>
+          ? userList.map(user =>
+              currentUser === user._id ? null : (
+                <div key={user._id} className="users">
+                  <div className="user-information">
+                    <img src={user.image} />
+                    <div className="close-information">
+                      <h3>{user.name}</h3>
+                    </div>
+                  </div>
+                  <div className="friends-information">
+                    {friendsList.length > 0 ? (
+                      friendsList.map(friend => (
+                        <div key={friend._id} className="information">
+                          <StatusLine
+                            currentUser={currentUser}
+                            statusRequest={friend.status}
+                            firstUserID={friend.firstUserID}
+                            secondUserID={friend.secondUserID}
+                            currentUserFromList={user._id}
+                            currentFriendObject={friend._id}
+                          /> 
+                        </div>
+                      ))
+                    ) : (
+                      <AddFriend
+                        secondUserID={user._id}
+                        currentUser={currentUser}
+                        currentUserFromList={user._id}
+                      />
+                    )}
                   </div>
                 </div>
-                <div className="friends-information">
-                  {friendsList.map(friend => (
-                    <div key={friend._id} className="information">
-                      {user._id === friend.secondUserID ? <div className="status">{friend.status}</div> : null }
-                      
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))
+              )
+            )
           : inputUser[0].map(user => (
               <div key={user._id} className="users">
                 <div className="user-information">
@@ -116,10 +139,11 @@ const UserPage = props => {
                   <h3>{user.name}</h3>
                 </div>
                 <div className="friends-information">
-                {friendsList.map(friend => (
+                  {friendsList.map(friend => (
                     <div key={friend._id} className="information">
-                      {user._id === friend.secondUserID ? <div className="status">{friend.status}</div> : null }
-                      
+                      {user._id === friend.secondUserID ? (
+                        <div className="status">{friend.status}</div>
+                      ) : null}
                     </div>
                   ))}
                 </div>
