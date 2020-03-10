@@ -38,7 +38,7 @@ const statusLine = props => {
               )
             ) : null
           ) : (
-            <AddFriend secondUserID={secondUserID} currentUser={currentUser} />
+            null
           )}
         </div>
       );
