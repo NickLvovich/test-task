@@ -10,48 +10,48 @@ const statusLine = props => {
     currentUserFromList,
     currentFriendObject
   } = props;
-  console.log("statusRequest", statusRequest);
-  switch (statusRequest) {
-    case "Request":
+  // console.log("currentUserFromList", currentUserFromList);
+
+  console.log("statusRequest", statusRequest)
+
+  switch (currentUserFromList) {
+    
+
+    case firstUserID:
       return (
-        <div className="request">
-          {currentUserFromList === firstUserID ? (
-            currentUser === secondUserID ? (
-              currentUser !== firstUserID ? (
-                <div className="status-show">Accept or delete</div>
-              ) : (
-                <AddFriend
-                  secondUserID={secondUserID}
-                  currentUser={currentUser}
-                />
-              )
-            ) : null
-          ) : currentUserFromList === secondUserID ? (
-            currentUser === firstUserID ? (
-              currentUser !== secondUserID ? (
-                <div className="status-show">Pending Request</div>
-              ) : (
-                <AddFriend
-                  secondUserID={secondUserID}
-                  currentUser={currentUser}
-                />
-              )
-            ) : null
-          ) : (
-            null
-          )}
+        <div>
+          {statusRequest === "Friends"
+            ? "friends"
+            : currentUser === secondUserID
+            ? "accept or delete"
+            : null}
         </div>
       );
-      break;
-    case "Friends":
+
+    case secondUserID:
       return (
-        <div className="request">
-          <div className="status-show">Friend</div>
+        <div>
+          {statusRequest === "Friends"
+            ? "friends"
+            : currentUser === firstUserID
+            ? "pending request"
+            : null}
         </div>
       );
-      break;
+
     default:
-      return null;
+      return (
+        <>
+          {statusRequest === undefined ? (
+            <AddFriend
+              statusRequest={statusRequest}
+              firstUserID={firstUserID}
+              secondUserID={currentUserFromList}
+              currentUser={currentUser}
+            />
+          ) : null}
+        </>
+      );
   }
 };
 

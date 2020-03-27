@@ -34,21 +34,16 @@ router.post("/remove_any_friend_or_request", (req, res) => {
   });
 });
 
-router.get("/friends_list", function(req, res) {
+router.get("/list", function(req, res) {
   Friend.find({ }, function(err, friends) {
     if (err) return res.json({ success: false, err });
 
-    var friendMap = {};
-
-    friends.forEach(function(friend) {
-      friendMap[friend.secondUserID] = friend;
-    });
-    res.send(friendMap);
+    res.send(friends);
     
   });
 });
 
-router.post("/find_friend", (req, res) => {
+router.post("/find_friend_by_request", (req, res) => {
   Friend.find({ secondUserID: req.body.secondUserID }, (err, friends) => {
     if (!friends)
       return res.json({
@@ -63,4 +58,22 @@ router.post("/find_friend", (req, res) => {
       res.send(friendMap);
   });
 });
+
+router.get("/find_friend_by_response", (req, res) => {
+  Friend.find({ firstUserID: req.body.firstUserID }, (err, friends) => {
+    if (!friends)
+      return res.json({
+        searchingSuccess: false,
+        messsage: "Searching failed, person not found, or u need more arguments"
+      });
+      var friendMap = {};
+
+      friends.forEach(function(friend) {
+        friendMap[friend.secondUserID] = friend;
+      });
+      res.send(friendMap);
+  });
+});
+
+
 module.exports = router;

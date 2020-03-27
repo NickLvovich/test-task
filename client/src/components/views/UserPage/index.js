@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, findUser } from "../../../Redux/actions/user_actions";
 import {
   fetchFriendsList,
-  addFriend
+  findFriendByResponse,
+  findFriendByRequest
 } from "../../../Redux/actions/friends_actions";
 import * as _ from "lodash";
 
@@ -20,9 +21,11 @@ const UserPage = props => {
 
   console.log("currentUser", currentUser);
 
-  let friendsListObj = useSelector(state => state.friends.friends);
-  let userListObj = useSelector(state => state.user.users);
+  let friendsList = useSelector(state => state.friends.friends);
+  let allUsersObj = useSelector(state => state.user.users);
   let inputUserObj = useSelector(state => state.user.user);
+  let receivingUserID = useSelector(state => state.user.receivingUserID);
+  let actingUserID = useSelector(state => state.user.actingUserID);
 
   const [formErrorMessage, setFormErrorMessage] = useState(
     "ok, we receive data"
@@ -30,12 +33,11 @@ const UserPage = props => {
 
   const dispatch = useDispatch();
 
-  const userList = _.values(userListObj);
+  const allUsers = _.values(allUsersObj);
   const inputUser = _.values(inputUserObj);
-  const friendsList = _.values(friendsListObj);
 
   console.log("friendsList", friendsList);
-  console.log("userList", userList);
+
   useEffect(() => {
     dispatch(fetchUsers())
       .then(response => response.data)
@@ -96,9 +98,9 @@ const UserPage = props => {
         </Formik>
       </div>
 
-      <div className="user-container">
+      {/* <div className="user-container">
         {inputUser <= 1
-          ? userList.map(user =>
+          ? allUsers.map(user =>
               currentUser === user._id ? null : (
                 <div key={user._id} className="users">
                   <div className="user-information">
@@ -108,26 +110,32 @@ const UserPage = props => {
                     </div>
                   </div>
                   <div className="friends-information">
-                    {friendsList.length > 0 ? (
-                      friendsList.map(friend => (
-                        <div key={friend._id} className="information">
-                          <StatusLine
-                            currentUser={currentUser}
-                            statusRequest={friend.status}
-                            firstUserID={friend.firstUserID}
-                            secondUserID={friend.secondUserID}
-                            currentUserFromList={user._id}
-                            currentFriendObject={friend._id}
-                          /> 
-                        </div>
-                      ))
-                    ) : (
-                      <AddFriend
-                        secondUserID={user._id}
-                        currentUser={currentUser}
-                        currentUserFromList={user._id}
-                      />
-                    )}
+                    <div className="information-item">
+                      {friendsList.length > 0 ? (
+                        friendsList.map(friend => (
+                          <div key={friend._id} className="information">
+                            {console.log('===> ', friend._id, user._id, friend.firstUserID, friend.secondUserID, friend.firstUserID)}
+                            <>
+                              <StatusLine
+                                currentUser={currentUser}
+                                statusRequest={friend.status}
+                                firstUserID={friend.firstUserID}
+                                secondUserID={friend.secondUserID}
+                                currentUserFromList={user._id}
+                                currentFriendObject={friend._id}
+                              />
+                            </>
+           
+                          </div>
+                        ))
+                      ) : (
+                        <AddFriend
+                          secondUserID={user._id}
+                          currentUser={currentUser}
+                          currentUserFromList={user._id}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               )
@@ -146,6 +154,46 @@ const UserPage = props => {
                       ) : null}
                     </div>
                   ))}
+                </div>
+              </div>
+            ))}
+      </div> */}
+      <div className="user-container">
+        {inputUser <= 1
+          ? allUsers.map(user => (
+              <>
+                {currentUser !== user._id && (
+                  <div key={user._id} className="users">
+                    <div className="user-information">
+                      <img src={user.image} />
+                      <div className="close-information">
+                        <h3>{user.name}</h3>
+                      </div>
+                    </div>
+
+                    <div className="friends-information">
+                      <AddFriend
+                        secondUserID={user._id}
+                        currentUser={currentUser}
+                      />
+                    </div>
+                  </div>
+                )}
+              </>
+            ))
+          : inputUser[0].map(user => (
+              <div key={user._id} className="users">
+                <div className="user-information">
+                  <img src={user.image} />
+                  <h3>{user.name}</h3>
+                </div>
+                <div className="friends-information">
+                  <div className="friends-information">
+                    <AddFriend
+                      secondUserID={user._id}
+                      currentUser={currentUser}
+                    />
+                  </div>
                 </div>
               </div>
             ))}

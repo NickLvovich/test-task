@@ -8,7 +8,7 @@ import {
 } from "../../../Redux/actions/friends_actions";
 
 const AddFriend = props => {
-  let { currentUser, secondUserID } = props;
+  let { currentUser, secondUserID, key } = props;
   const [formErrorMessage, setFormErrorMessage] = useState(
     "ok, we receive data"
   );
@@ -39,7 +39,7 @@ const AddFriend = props => {
       }}
     >
       {props => (
-        <Form className="button-block" onSubmit={props.handleSubmit}>
+        <Form key={secondUserID} className="button-block" onSubmit={props.handleSubmit}>
           {props.errors.name && <div id="feedback">{props.errors.name}</div>}
           <button type="submit">Add friend</button>
         </Form>

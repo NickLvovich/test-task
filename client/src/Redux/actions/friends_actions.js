@@ -2,7 +2,8 @@ import axios from "axios";
 import {
   SHOW_FRIEND_LIST,
   ADD_FRIEND_REQUEST,
-  FIND_FRIEND,
+  FIND_FRIEND_REQUEST,
+  FIND_FRIEND_RESPONSE,
   REMOVE_FRIEND
 } from "./types";
 import { FRIEND_SERVER } from "../../components/Config";
@@ -20,7 +21,7 @@ export function addFriend(dataToSubmit) {
 
 export function fetchFriendsList() {
   const request = axios
-    .get(`${FRIEND_SERVER}/friends_list`)
+    .get(`${FRIEND_SERVER}/list`)
     .then(response => response.data);
   console.log("request", request);
 
@@ -30,15 +31,26 @@ export function fetchFriendsList() {
   };
 }
 
-export function findFriend(dataToSubmit) {
+export function findFriendByRequest(dataToSubmit) {
   const request = axios
-    .get(`${FRIEND_SERVER}/find_user`, dataToSubmit)
+    .get(`${FRIEND_SERVER}/find_friend_by_request`, dataToSubmit)
     .then(response => response.data);
   return {
-    type: FIND_FRIEND,
+    type: FIND_FRIEND_REQUEST,
     payload: request
   };
 }
+
+export function findFriendByResponse(dataToSubmit) {
+  const request = axios
+    .get(`${FRIEND_SERVER}/find_friend_by_response`, dataToSubmit)
+    .then(response => response.data);
+  return {
+    type: FIND_FRIEND_RESPONSE,
+    payload: request
+  };
+}
+
 
 export function removeFriend(dataToSubmit) {
   const request = axios
