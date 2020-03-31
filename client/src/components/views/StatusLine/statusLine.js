@@ -12,46 +12,33 @@ const statusLine = props => {
   } = props;
   // console.log("currentUserFromList", currentUserFromList);
 
-  console.log("statusRequest", statusRequest)
+  console.log("statusRequest", statusRequest);
 
-  switch (currentUserFromList) {
-    
-
+  switch (currentUser) {
     case firstUserID:
       return (
         <div>
-          {statusRequest === "Friends"
-            ? "friends"
-            : currentUser === secondUserID
-            ? "accept or delete"
-            : null}
+          { currentUserFromList === secondUserID ? (
+            "accept or delete"
+          ) : (
+            null
+          )}
         </div>
       );
 
     case secondUserID:
       return (
         <div>
-          {statusRequest === "Friends"
-            ? "friends"
-            : currentUser === firstUserID
-            ? "pending request"
-            : null}
+          {currentUserFromList === firstUserID ? (
+            "pending request"
+          ) : (
+            null
+          )}
         </div>
       );
 
     default:
-      return (
-        <>
-          {statusRequest === undefined ? (
-            <AddFriend
-              statusRequest={statusRequest}
-              firstUserID={firstUserID}
-              secondUserID={currentUserFromList}
-              currentUser={currentUser}
-            />
-          ) : null}
-        </>
-      );
+      return null;
   }
 };
 

@@ -8,11 +8,10 @@ import {
 
 const initialState = {
   friend_status: [],
-  friendsList: [],
   FriendRequest: [],
   actingUserID: {},
   receivingUserID: {},
-  friends: {}
+  friends: []
 };
 
 export default function(state = initialState, action) {

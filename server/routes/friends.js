@@ -37,7 +37,7 @@ router.post("/remove_any_friend_or_request", (req, res) => {
 router.get("/list", function(req, res) {
   Friend.find({ }, function(err, friends) {
     if (err) return res.json({ success: false, err });
-
+    
     res.send(friends);
     
   });
