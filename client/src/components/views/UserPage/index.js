@@ -26,16 +26,16 @@ const UserPage = props => {
   );
 
   const dispatch = useDispatch();
-  
-  console.log("friendsList", friendsList);
+
 
   const allUsers = _.values(allUsersObj);
   const inputUser = _.values(inputUserObj);
 
-  const commonList = allUsers.concat(friendsList);
+  const currentUserList = friendsList.filter(
+    friend =>
+      friend.firstUserID === currentUser || friend.secondUserID === currentUser
+  );
 
-  console.log("commonList", commonList);
-  console.log("friendsList", friendsList);
 
   useEffect(() => {
     dispatch(fetchUsers())
@@ -56,7 +56,6 @@ const UserPage = props => {
         }, 1000);
       });
   }, []);
-
 
   return (
     <div className="container">
@@ -112,20 +111,24 @@ const UserPage = props => {
 
                     <div className="friends-information">
                       <div className="information-item">
-                        {friendsList.find(
-                          friend => friend.secondUserID === user._id 
+                        {currentUserList.find(
+                          friend =>
+                            friend.secondUserID === user._id ||
+                            friend.firstUserID === user._id
                         ) ? (
-                          friendsList.map(friend => (
-                            <StatusLine
-                              currentUser={currentUser}
-                              statusRequest={friend.status}
-                              firstUserID={friend.firstUserID}
-                              secondUserID={friend.secondUserID}
-                              currentUserFromList={user._id}
-                              currentFriendObject={friend._id}
-                            />
+                          currentUserList.map(
+                            friend => (
+                              <StatusLine
+                                currentUser={currentUser}
+                                statusRequest={friend.status}
+                                firstUserID={friend.firstUserID}
+                                secondUserID={friend.secondUserID}
+                                currentUserFromList={user._id}
+                                currentFriendObject={friend._id}
+                              />
+                            )
                             // нужно отсортировать объект
-                          ))
+                          )
                         ) : (
                           <AddFriend
                             secondUserID={user._id}

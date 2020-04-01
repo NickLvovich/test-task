@@ -14,12 +14,12 @@ const statusLine = props => {
 
   console.log("statusRequest", statusRequest);
 
-  switch (currentUser) {
+  switch (currentUserFromList) {
     case firstUserID:
       return (
         <div>
-          { currentUserFromList === secondUserID ? (
-            "accept or delete"
+          { currentUser === secondUserID ? (
+            "accept or delete "
           ) : (
             null
           )}
@@ -29,7 +29,7 @@ const statusLine = props => {
     case secondUserID:
       return (
         <div>
-          {currentUserFromList === firstUserID ? (
+          {currentUser === firstUserID ? (
             "pending request"
           ) : (
             null
