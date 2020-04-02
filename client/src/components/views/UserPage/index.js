@@ -12,21 +12,18 @@ import "./users.scss";
 import AddFriend from "../AddFriend/AddFriend";
 import StatusLine from "../StatusLine/statusLine";
 
-const UserPage = props => {
-  const currentUser = props.user.userData._id;
-
-  console.log("currentUser", currentUser);
-
+const UserPage = () => {
   let friendsList = useSelector(state => state.friends.friends);
   let allUsersObj = useSelector(state => state.user.users);
   let inputUserObj = useSelector(state => state.user.user);
+  const currentUser = useSelector(state => state.user.userData._id);
+  console.log("currentUser", currentUser);
 
   const [formErrorMessage, setFormErrorMessage] = useState(
     "ok, we receive data"
   );
 
   const dispatch = useDispatch();
-
 
   const allUsers = _.values(allUsersObj);
   const inputUser = _.values(inputUserObj);
@@ -35,7 +32,6 @@ const UserPage = props => {
     friend =>
       friend.firstUserID === currentUser || friend.secondUserID === currentUser
   );
-
 
   useEffect(() => {
     dispatch(fetchUsers())
