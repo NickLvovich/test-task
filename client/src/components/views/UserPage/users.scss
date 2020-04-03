@@ -28,6 +28,7 @@
           align-items: center;
           justify-content: space-between;
           width: 15vw;
+
         }
         img {
           margin-right: 10px;
@@ -41,6 +42,9 @@
   display: none;
 }
 
-.friends-information :nth-child(){
- display: none;
+.friends-information{
+  .info {
+    display: flex;
+    width: 200px;
+  }
 }

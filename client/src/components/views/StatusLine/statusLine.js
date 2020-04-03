@@ -1,5 +1,6 @@
 import React from "react";
-import AddFriend from "../AddFriend/AddFriend";
+import DeleteFriend from "../DeleteFriend";
+import AcceptFriend from "../AcceptFriend";
 
 const statusLine = props => {
   let {
@@ -10,18 +11,23 @@ const statusLine = props => {
     currentUserFromList,
     currentFriendObject
   } = props;
-  // console.log("currentUserFromList", currentUserFromList);
-
-  console.log("statusRequest", statusRequest);
 
   switch (currentUserFromList) {
     case firstUserID:
       return (
         <div>
-          { currentUser === secondUserID ? (
-            "accept or delete "
+          {statusRequest !== "Friends" ? (
+            currentUser === secondUserID ? (
+              <div className="info">
+                <AcceptFriend friendshipID={currentFriendObject} /> or{" "}
+                <DeleteFriend friendshipID={currentFriendObject} />
+              </div>
+            ) : null
           ) : (
-            null
+            <div className="info">
+              friends
+              <DeleteFriend friendshipID={currentFriendObject} />
+            </div>
           )}
         </div>
       );
@@ -29,10 +35,18 @@ const statusLine = props => {
     case secondUserID:
       return (
         <div>
-          {currentUser === firstUserID ? (
-            "pending request"
+          {statusRequest !== "Friends" ? (
+            currentUser === firstUserID ? (
+              <div className="info">
+                pending request or
+                <DeleteFriend friendshipID={currentFriendObject} />
+              </div>
+            ) : null
           ) : (
-            null
+            <div className="info">
+              friends
+              <DeleteFriend friendshipID={currentFriendObject} />
+            </div>
           )}
         </div>
       );

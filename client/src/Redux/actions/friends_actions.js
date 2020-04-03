@@ -4,7 +4,8 @@ import {
   ADD_FRIEND_REQUEST,
   FIND_FRIEND_REQUEST,
   FIND_FRIEND_RESPONSE,
-  REMOVE_FRIEND
+  REMOVE_FRIEND,
+  ACCEPT_FRIEND
 } from "./types";
 import { FRIEND_SERVER } from "../../components/Config";
 
@@ -19,11 +20,21 @@ export function addFriend(dataToSubmit) {
   };
 }
 
+export function acceptFriend(dataToSubmit) {
+  const request = axios
+  .post(`${FRIEND_SERVER}/request_approved`, dataToSubmit)
+  .then(response => response.data);
+
+return {
+  type: ACCEPT_FRIEND,
+  payload: request
+};
+}
+
 export function fetchFriendsList() {
   const request = axios
     .get(`${FRIEND_SERVER}/list`)
     .then(response => response.data);
-  console.log("request", request);
 
   return {
     type: SHOW_FRIEND_LIST,

@@ -9,15 +9,14 @@ import * as _ from "lodash";
 
 import "./users.scss";
 
-import AddFriend from "../AddFriend/AddFriend";
+import AddFriend from "../AddFriend";
 import StatusLine from "../StatusLine/statusLine";
 
 const UserPage = () => {
   let friendsList = useSelector(state => state.friends.friends);
   let allUsersObj = useSelector(state => state.user.users);
   let inputUserObj = useSelector(state => state.user.user);
-  const currentUser = useSelector(state => state.user.userData._id);
-  console.log("currentUser", currentUser);
+  let currentUser = useSelector(state => state.user.userData._id);
 
   const [formErrorMessage, setFormErrorMessage] = useState(
     "ok, we receive data"

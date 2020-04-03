@@ -8,7 +8,6 @@ import {
 
 const initialState = {
   friend_status: [],
-  FriendRequest: [],
   actingUserID: {},
   receivingUserID: {},
   friends: []

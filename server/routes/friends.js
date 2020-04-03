@@ -4,10 +4,10 @@ const { Friend } = require("../models/friend");
 
 router.post("/add_friend", (req, res) => {
   const friend = new Friend(req.body);
-  friend.save((err, doc) => {
+  friend.save((err, friends) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({
-      friendData: doc
+      friendData: friends
     });
   });
 });
@@ -15,7 +15,7 @@ router.post("/add_friend", (req, res) => {
 router.post("/request_approved", (req, res) => {
   Friend.findOneAndUpdate(
     { _id: req.body._id },
-    { status: "friends" },
+    { status: "Friends" },
     (err, friend) => {
       if (err) return res.json({ success: false, err });
       res.status(200).json({
@@ -26,7 +26,7 @@ router.post("/request_approved", (req, res) => {
 });
 
 router.post("/remove_any_friend_or_request", (req, res) => {
-  Friend.remove({ _id: req.body._id }, (err, friend) => {
+  Friend.deleteOne({ _id: req.body._id }, (err, friend) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({
       friendData: friend
