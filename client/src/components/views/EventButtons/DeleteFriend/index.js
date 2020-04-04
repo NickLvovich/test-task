@@ -47,7 +47,7 @@ const RemoveFriend = props => {
           onSubmit={props.handleSubmit}
         >
           {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-          <button type="submit">Delete</button>
+          <button  className="ant-btn"  type="submit">Delete</button>
         </Form>
       )}
     </Formik>

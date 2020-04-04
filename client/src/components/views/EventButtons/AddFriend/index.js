@@ -52,7 +52,7 @@ const AddFriend = props => {
       {props => (
         <Form key={secondUserID} className="button-block" onSubmit={props.handleSubmit}>
           {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-          <button type="submit">Add friend</button>
+          <button className="ant-btn" type="submit">Add friend</button>
         </Form>
       )}
     </Formik>

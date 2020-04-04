@@ -1,6 +1,6 @@
 import React from "react";
 import DeleteFriend from "../EventButtons/DeleteFriend";
-import AcceptFriend from "../AcceptFriend";
+import AcceptFriend from "../EventButtons/AcceptFriend";
 
 const statusLine = props => {
   let {
@@ -25,7 +25,7 @@ const statusLine = props => {
             ) : null
           ) : (
             <div className="info">
-              friends
+              <p>friends</p> 
               <DeleteFriend friendshipID={currentFriendObject} />
             </div>
           )}
@@ -38,13 +38,13 @@ const statusLine = props => {
           {statusRequest !== "Friends" ? (
             currentUser === firstUserID ? (
               <div className="info">
-                pending request or
+                <p>pending request or</p> 
                 <DeleteFriend friendshipID={currentFriendObject} />
               </div>
             ) : null
           ) : (
             <div className="info">
-              friends
+              <p>friends</p>
               <DeleteFriend friendshipID={currentFriendObject} />
             </div>
           )}

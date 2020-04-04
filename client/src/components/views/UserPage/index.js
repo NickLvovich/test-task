@@ -86,7 +86,7 @@ const UserPage = () => {
               {props.errors.name && (
                 <div id="feedback">{props.errors.name}</div>
               )}
-              <button type="submit">Submit</button>
+              <button className="ant-btn ant-btn-primary" type="submit">Submit</button>
             </Form>
           )}
         </Formik>

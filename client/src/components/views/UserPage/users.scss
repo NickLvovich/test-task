@@ -46,5 +46,10 @@
   .info {
     display: flex;
     width: 200px;
+    align-items: baseline;
+    p {
+      width: 300px;
+      text-align: center;
+    }
   }
 }
