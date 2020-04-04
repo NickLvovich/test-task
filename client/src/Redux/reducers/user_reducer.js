@@ -8,23 +8,23 @@ import {
 } from "../actions/types";
 
 const initialState = {
+  userData: [],
   pending: false,
   users: [],
   error: null,
   user: [],
   register: [],
-  loginSucces: [],
-  userData: []
+  loginSucces: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case AUTH_USER:
+      return { ...state, userData: action.payload };
     case REGISTER_USER:
       return { ...state, register: action.payload };
     case LOGIN_USER:
       return { ...state, loginSucces: action.payload };
-    case AUTH_USER:
-      return { ...state, userData: action.payload };
     case SHOW_LIST_OF_USERS:
       return { ...state, users: action.payload };
     case FIND_USER:

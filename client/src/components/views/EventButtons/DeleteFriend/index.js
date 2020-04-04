@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { Form } from "antd";
-import { removeFriend, fetchFriendsList } from "../../../Redux/actions/friends_actions";
+import { removeFriend, fetchFriendsList } from "../../../../Redux/actions/friends_actions";
 
 const RemoveFriend = props => {
   let { friendshipID } = props;

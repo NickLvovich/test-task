@@ -5,14 +5,13 @@ import { Form } from "antd";
 import {
   addFriend,
   fetchFriendsList
-} from "../../../Redux/actions/friends_actions";
+} from "../../../../Redux/actions/friends_actions";
 
 const AddFriend = props => {
-  let { secondUserID } = props;
+  let { secondUserID, currentUser } = props;
   const [formErrorMessage, setFormErrorMessage] = useState(
     "ok, we receive data"
   );
-  let currentUser = useSelector(state => state.user.userData._id);
 
   const dispatch = useDispatch();
 
@@ -48,7 +47,6 @@ const AddFriend = props => {
             }, 1000);
           });
         setSubmitting(false);
-        // диспачнуть весь список людей по возможности, смотивировать перерендер
       }}
     >
       {props => (

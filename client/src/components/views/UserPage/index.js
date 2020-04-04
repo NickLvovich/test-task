@@ -9,7 +9,7 @@ import * as _ from "lodash";
 
 import "./users.scss";
 
-import AddFriend from "../AddFriend";
+import AddFriend from "../EventButtons/AddFriend";
 import StatusLine from "../StatusLine/statusLine";
 
 const UserPage = () => {
@@ -143,11 +143,30 @@ const UserPage = () => {
                   <h3>{user.name}</h3>
                 </div>
                 <div className="friends-information">
-                  <div className="friends-information">
-                    <AddFriend
-                      secondUserID={user._id}
-                      currentUser={currentUser}
-                    />
+                  <div className="information-item">
+                    {currentUserList.find(
+                      friend =>
+                        friend.secondUserID === user._id ||
+                        friend.firstUserID === user._id
+                    ) ? (
+                      currentUserList.map(
+                        friend => (
+                          <StatusLine
+                            currentUser={currentUser}
+                            statusRequest={friend.status}
+                            firstUserID={friend.firstUserID}
+                            secondUserID={friend.secondUserID}
+                            currentUserFromList={user._id}
+                            currentFriendObject={friend._id}
+                          />
+                        )
+                      )
+                    ) : (
+                      <AddFriend
+                        secondUserID={user._id}
+                        currentUser={currentUser}
+                      />
+                    )}
                   </div>
                 </div>
               </div>

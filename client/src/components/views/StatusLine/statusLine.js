@@ -1,5 +1,5 @@
 import React from "react";
-import DeleteFriend from "../DeleteFriend";
+import DeleteFriend from "../EventButtons/DeleteFriend";
 import AcceptFriend from "../AcceptFriend";
 
 const statusLine = props => {

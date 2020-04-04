@@ -14,14 +14,12 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  console.log("ftiendState", state);
+  // console.log("ftiendState", state, action.type);
   switch (action.type) {
     case ADD_FRIEND_REQUEST:
       return { ...state, FriendRequest: action.payload };
     case SHOW_FRIEND_LIST:
       return { ...state, friends: action.payload };
-    case ADD_FRIEND_REQUEST:
-      return { ...state, friend_status: action.payload };
     case REMOVE_FRIEND:
       return { ...state };
     case FIND_FRIEND_REQUEST:
