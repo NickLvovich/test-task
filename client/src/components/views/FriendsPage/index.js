@@ -5,7 +5,6 @@ import { fetchUsers, findUser } from "../../../Redux/actions/user_actions";
 import { fetchFriendsList } from "../../../Redux/actions/friends_actions";
 import * as _ from "lodash";
 
-import StatusRequest from "../StatusRequest";
 import StatusLine from "../StatusLine/statusLine";
 import AddFriend from "../EventButtons/AddFriend";
 
