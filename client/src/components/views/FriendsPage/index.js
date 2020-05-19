@@ -9,7 +9,7 @@ import StatusLine from "../StatusLine/statusLine";
 import AddFriend from "../EventButtons/AddFriend";
 
 const FriendsPage = () => {
-  let friendsList = useSelector((state) => state.friends.friends);
+  let friendsListObj = useSelector((state) => state.friends.friends);
   let allUsersObj = useSelector((state) => state.user.users);
   let inputUserObj = useSelector((state) => state.user.user);
   let currentUser = useSelector((state) => state.user.userData._id);
@@ -21,6 +21,8 @@ const FriendsPage = () => {
   const dispatch = useDispatch();
 
   const allUsers = _.values(allUsersObj);
+
+  const friendsList = _.values(friendsListObj);
 
   const currentUserList = friendsList.filter(
     (friend) =>
@@ -60,6 +62,8 @@ const FriendsPage = () => {
         }, 1000);
       });
   }, []);
+
+  console.log('currentUserList', currentUserList)
 
   return (
     <div>

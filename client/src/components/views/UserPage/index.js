@@ -13,7 +13,7 @@ import AddFriend from "../EventButtons/AddFriend";
 import StatusLine from "../StatusLine/statusLine";
 
 const UserPage = () => {
-  let friendsList = useSelector(state => state.friends.friends);
+  let friendsListObj = useSelector(state => state.friends.friends);
   let allUsersObj = useSelector(state => state.user.users);
   let inputUserObj = useSelector(state => state.user.user);
   let currentUser = useSelector(state => state.user.userData._id);
@@ -26,6 +26,7 @@ const UserPage = () => {
 
   const allUsers = _.values(allUsersObj);
   const inputUser = _.values(inputUserObj);
+  const friendsList = _.values(friendsListObj);
 
   const currentUserList = friendsList.filter(
     friend =>
@@ -50,7 +51,7 @@ const UserPage = () => {
           setFormErrorMessage("");
         }, 1000);
       });
-  }, [currentUserList]);
+  }, [friendsListObj]);
 
   return (
     <div className="container">
