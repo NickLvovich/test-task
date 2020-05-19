@@ -50,7 +50,7 @@ const UserPage = () => {
           setFormErrorMessage("");
         }, 1000);
       });
-  }, []);
+  }, [currentUserList]);
 
   return (
     <div className="container">
