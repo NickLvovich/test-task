@@ -41,7 +41,6 @@ const FriendsPage = () => {
     (friend) => friend.status === "Friends"
   );
 
-  console.log("currentUser", currentUser);
 
   useEffect(() => {
     dispatch(fetchUsers())
@@ -61,7 +60,7 @@ const FriendsPage = () => {
           setFormErrorMessage("");
         }, 1000);
       });
-  }, []);
+  }, [friendsListObj]);
 
   console.log('currentUserList', currentUserList)
 

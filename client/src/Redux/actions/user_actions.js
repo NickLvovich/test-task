@@ -9,8 +9,8 @@ import {
 } from "./types";
 import { USER_SERVER } from "../../components/Config";
 
-export function registerUser(dataToSubmit) {
-  const request = axios
+export async function registerUser(dataToSubmit) {
+  const request = await axios
     .post(`${USER_SERVER}/register`, dataToSubmit)
     .then(response => response.data);
 
@@ -20,8 +20,8 @@ export function registerUser(dataToSubmit) {
   };
 }
 
-export function loginUser(dataToSubmit) {
-  const request = axios
+export async function loginUser(dataToSubmit) {
+  const request = await axios
     .post(`${USER_SERVER}/login`, dataToSubmit)
     .then(response => response.data);
 
@@ -31,8 +31,8 @@ export function loginUser(dataToSubmit) {
   };
 }
 
-export function auth() {
-  const request = axios
+export async function auth() {
+  const request = await axios
     .get(`${USER_SERVER}/auth`)
     .then(response => response.data);
 
@@ -42,8 +42,8 @@ export function auth() {
   };
 }
 
-export function logoutUser() {
-  const request = axios
+export async function logoutUser() {
+  const request = await axios
     .get(`${USER_SERVER}/logout`)
     .then(response => response.data);
 
@@ -53,8 +53,8 @@ export function logoutUser() {
   };
 }
 
-export function fetchUsers() {
-  const request = axios
+export async function fetchUsers() {
+  const request = await axios
     .get(`${USER_SERVER}/usersList`)
     .then(response => response.data);
   return {
@@ -63,8 +63,8 @@ export function fetchUsers() {
   };
 }
 
-export function findUser(dataToSubmit) {
-  const request = axios
+export async function findUser(dataToSubmit) {
+  const request = await axios
     .post(`${USER_SERVER}/find_user`, dataToSubmit)
     .then(response => response.data);
   return {

@@ -123,7 +123,6 @@ const UserPage = () => {
                                 currentFriendObject={friend._id}
                               />
                             )
-                            // нужно отсортировать объект
                           )
                         ) : (
                           <AddFriend
