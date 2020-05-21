@@ -6,7 +6,6 @@ import {
   acceptFriend,
   fetchFriendsList,
 } from "../../../../Redux/actions/friends_actions";
-import { Button } from 'antd';
 
 const AcceptFriend = (props) => {
   let { friendshipID } = props;

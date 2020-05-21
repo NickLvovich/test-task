@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, findUser } from "../../../Redux/actions/user_actions";
+import { fetchUsers } from "../../../Redux/actions/user_actions";
 import { fetchFriendsList } from "../../../Redux/actions/friends_actions";
 import * as _ from "lodash";
 
@@ -11,7 +11,6 @@ import AddFriend from "../EventButtons/AddFriend";
 const FriendsPage = () => {
   let friendsListObj = useSelector((state) => state.friends.friends);
   let allUsersObj = useSelector((state) => state.user.users);
-  let inputUserObj = useSelector((state) => state.user.user);
   let currentUser = useSelector((state) => state.user.userData._id);
 
   const [formErrorMessage, setFormErrorMessage] = useState(
@@ -41,7 +40,6 @@ const FriendsPage = () => {
     (friend) => friend.status === "Friends"
   );
 
-
   useEffect(() => {
     dispatch(fetchUsers())
       .then((response) => response.data)
@@ -62,8 +60,6 @@ const FriendsPage = () => {
       });
   }, [friendsListObj]);
 
-  console.log('currentUserList', currentUserList)
-
   return (
     <div>
       <div className="container">
@@ -82,7 +78,7 @@ const FriendsPage = () => {
                   ) ? (
                     <div key={user._id} className="users">
                       <div className="user-information">
-                        <img src={user.image} />
+                        <img src={user.image} alt={user.name} />
                         <div className="close-information">
                           <h3>{user.name}</h3>
                         </div>
@@ -133,7 +129,7 @@ const FriendsPage = () => {
                   ) ? (
                     <div key={user._id} className="users">
                       <div className="user-information">
-                        <img src={user.image} />
+                        <img src={user.image} alt={user.name} />
                         <div className="close-information">
                           <h3>{user.name}</h3>
                         </div>
@@ -179,12 +175,13 @@ const FriendsPage = () => {
                   currentUser !== user._id &&
                   currentFriendsList.find(
                     (friend) =>
-                    friend.secondUserID === user._id || friend.firstUserID === user._id &&
-                      friend.status === "Friends"
+                      friend.secondUserID === user._id ||
+                      (friend.firstUserID === user._id &&
+                        friend.status === "Friends")
                   ) ? (
                     <div key={user._id} className="users">
                       <div className="user-information">
-                        <img src={user.image} />
+                        <img src={user.image} alt={user.name} />
                         <div className="close-information">
                           <h3>{user.name}</h3>
                         </div>

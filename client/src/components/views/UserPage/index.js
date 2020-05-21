@@ -13,10 +13,10 @@ import AddFriend from "../EventButtons/AddFriend";
 import StatusLine from "../StatusLine/statusLine";
 
 const UserPage = () => {
-  let friendsListObj = useSelector(state => state.friends.friends);
-  let allUsersObj = useSelector(state => state.user.users);
-  let inputUserObj = useSelector(state => state.user.user);
-  let currentUser = useSelector(state => state.user.userData._id);
+  let friendsListObj = useSelector((state) => state.friends.friends);
+  let allUsersObj = useSelector((state) => state.user.users);
+  let inputUserObj = useSelector((state) => state.user.user);
+  let currentUser = useSelector((state) => state.user.userData._id);
 
   const [formErrorMessage, setFormErrorMessage] = useState(
     "ok, we receive data"
@@ -29,14 +29,14 @@ const UserPage = () => {
   const friendsList = _.values(friendsListObj);
 
   const currentUserList = friendsList.filter(
-    friend =>
+    (friend) =>
       friend.firstUserID === currentUser || friend.secondUserID === currentUser
   );
 
   useEffect(() => {
     dispatch(fetchUsers())
-      .then(response => response.data)
-      .catch(err => {
+      .then((response) => response.data)
+      .catch((err) => {
         setFormErrorMessage("There is no data, or problems with receiving it");
         setTimeout(() => {
           setFormErrorMessage("");
@@ -44,8 +44,8 @@ const UserPage = () => {
       });
 
     dispatch(fetchFriendsList())
-      .then(response => response.data)
-      .catch(err => {
+      .then((response) => response.data)
+      .catch((err) => {
         setFormErrorMessage("There is no data, or problems with receiving it");
         setTimeout(() => {
           setFormErrorMessage("");
@@ -60,11 +60,11 @@ const UserPage = () => {
           initialValues={{ name: "name" }}
           onSubmit={(values, { setSubmitting }) => {
             let dataToSubmit = {
-              name: values.name
+              name: values.name,
             };
             dispatch(findUser(dataToSubmit))
-              .then(response => response.payload.user)
-              .catch(err => {
+              .then((response) => response.payload.user)
+              .catch((err) => {
                 setFormErrorMessage(
                   "There is no data, or problems with receiving it"
                 );
@@ -75,7 +75,7 @@ const UserPage = () => {
             setSubmitting(false);
           }}
         >
-          {props => (
+          {(props) => (
             <Form className="button-block" onSubmit={props.handleSubmit}>
               <Input
                 type="text"
@@ -87,19 +87,21 @@ const UserPage = () => {
               {props.errors.name && (
                 <div id="feedback">{props.errors.name}</div>
               )}
-              <button className="ant-btn ant-btn-primary" type="submit">Submit</button>
+              <button className="ant-btn ant-btn-primary" type="submit">
+                Submit
+              </button>
             </Form>
           )}
         </Formik>
       </div>
       <div className="user-container">
         {inputUser <= 1
-          ? allUsers.map(user => (
+          ? allUsers.map((user) => (
               <>
                 {currentUser !== user._id && (
                   <div key={user._id} className="users">
                     <div className="user-information">
-                      <img src={user.image} />
+                      <img src={user.image} alt={user.name} />
                       <div className="close-information">
                         <h3>{user.name}</h3>
                       </div>
@@ -108,22 +110,20 @@ const UserPage = () => {
                     <div className="friends-information">
                       <div className="information-item">
                         {currentUserList.find(
-                          friend =>
+                          (friend) =>
                             friend.secondUserID === user._id ||
                             friend.firstUserID === user._id
                         ) ? (
-                          currentUserList.map(
-                            friend => (
-                              <StatusLine
-                                currentUser={currentUser}
-                                statusRequest={friend.status}
-                                firstUserID={friend.firstUserID}
-                                secondUserID={friend.secondUserID}
-                                currentUserFromList={user._id}
-                                currentFriendObject={friend._id}
-                              />
-                            )
-                          )
+                          currentUserList.map((friend) => (
+                            <StatusLine
+                              currentUser={currentUser}
+                              statusRequest={friend.status}
+                              firstUserID={friend.firstUserID}
+                              secondUserID={friend.secondUserID}
+                              currentUserFromList={user._id}
+                              currentFriendObject={friend._id}
+                            />
+                          ))
                         ) : (
                           <AddFriend
                             secondUserID={user._id}
@@ -136,31 +136,29 @@ const UserPage = () => {
                 )}
               </>
             ))
-          : inputUser[0].map(user => (
+          : inputUser[0].map((user) => (
               <div key={user._id} className="users">
                 <div className="user-information">
-                  <img src={user.image} />
+                  <img src={user.image} alt={user.name} />
                   <h3>{user.name}</h3>
                 </div>
                 <div className="friends-information">
                   <div className="information-item">
                     {currentUserList.find(
-                      friend =>
+                      (friend) =>
                         friend.secondUserID === user._id ||
                         friend.firstUserID === user._id
                     ) ? (
-                      currentUserList.map(
-                        friend => (
-                          <StatusLine
-                            currentUser={currentUser}
-                            statusRequest={friend.status}
-                            firstUserID={friend.firstUserID}
-                            secondUserID={friend.secondUserID}
-                            currentUserFromList={user._id}
-                            currentFriendObject={friend._id}
-                          />
-                        )
-                      )
+                      currentUserList.map((friend) => (
+                        <StatusLine
+                          currentUser={currentUser}
+                          statusRequest={friend.status}
+                          firstUserID={friend.firstUserID}
+                          secondUserID={friend.secondUserID}
+                          currentUserFromList={user._id}
+                          currentFriendObject={friend._id}
+                        />
+                      ))
                     ) : (
                       <AddFriend
                         secondUserID={user._id}
