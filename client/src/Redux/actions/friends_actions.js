@@ -65,7 +65,7 @@ export async function findFriendByResponse(dataToSubmit) {
 
 export async function removeFriend(dataToSubmit) {
   const request = await axios
-    .post(`${FRIEND_SERVER}/remove_any_friend_or_request`, dataToSubmit)
+    .post(`${FRIEND_SERVER}/delete`, dataToSubmit)
     .then(response => response.data);
 
   return {

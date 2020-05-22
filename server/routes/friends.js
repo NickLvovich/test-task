@@ -25,7 +25,7 @@ router.post("/request_approved", (req, res) => {
   );
 });
 
-router.post("/remove_any_friend_or_request", (req, res) => {
+router.post("/delete", (req, res) => {
   Friend.deleteOne({ _id: req.body._id }, (err, friend) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({

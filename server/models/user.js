@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 
+const secretKey = "secret"
 const saltRounds = 10;
 
 const userSchema = mongoose.Schema({
@@ -63,7 +64,7 @@ userSchema.methods.comparePassword = function(plainPassword, callback) {
 
 userSchema.methods.generateToken = function(callback) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), "secret");
+  const token = jwt.sign(user._id.toHexString(), secretKey);
   const oneHour = moment()
     .add(1, "hour")
     .valueOf();
@@ -79,7 +80,7 @@ userSchema.methods.generateToken = function(callback) {
 userSchema.statics.findByToken = function(token, callback) {
   const user = this;
 
-  jwt.verify(token, "secret", function(err, decode) {
+  jwt.verify(token, secretKey, function(err, decode) {
     user.findOne({ "_id": decode, token: token }, function(err, user) {
       if (err) return callback(err);
       callback(null, user);
