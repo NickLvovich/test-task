@@ -4,7 +4,7 @@
   "description": "homework",
   "main": "index.js",
   "engines": {
-    "node": "14.2.0",
+    "node": "12.18.1",
     "npm": "6.13.4"
   },
   "scripts": {
@@ -30,7 +30,7 @@
     "saslprep": "^1.0.3"
   },
   "devDependencies": {
-    "http-proxy-middleware": "^1.0.0",
+    "http-proxy-middleware": "^1.0.4",
     "nodemon": "^2.0.2"
   }
 }

@@ -27,7 +27,7 @@ const UserPage = () => {
   const allUsers = _.values(allUsersObj);
   const inputUser = _.values(inputUserObj);
   const friendsList = _.values(friendsListObj);
-
+  
   const currentUserList = friendsList.filter(
     (friend) =>
       friend.firstUserID === currentUser || friend.secondUserID === currentUser
@@ -43,6 +43,10 @@ const UserPage = () => {
         }, 1000);
       });
 
+
+  }, []);
+
+  useEffect(() => {
     dispatch(fetchFriendsList())
       .then((response) => response.data)
       .catch((err) => {
@@ -51,7 +55,11 @@ const UserPage = () => {
           setFormErrorMessage("");
         }, 1000);
       });
-  }, [friendsListObj]);
+  }, [])
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <div className="container">

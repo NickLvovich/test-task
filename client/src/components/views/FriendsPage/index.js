@@ -49,16 +49,22 @@ const FriendsPage = () => {
           setFormErrorMessage("");
         }, 1000);
       });
+  }, []);
 
+  useEffect(() => {
     dispatch(fetchFriendsList())
-      .then((response) => response.data)
-      .catch((err) => {
-        setFormErrorMessage("There is no data, or problems with receiving it");
-        setTimeout(() => {
-          setFormErrorMessage("");
-        }, 1000);
-      });
-  }, [friendsListObj]);
+    .then((response) => response.data)
+    .catch((err) => {
+      setFormErrorMessage("There is no data, or problems with receiving it");
+      setTimeout(() => {
+        setFormErrorMessage("");
+      }, 1000);
+    });
+  }, [])
+
+  useEffect(() => {
+    
+  }, [friendsList])
 
   return (
     <div>
