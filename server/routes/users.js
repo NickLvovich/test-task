@@ -59,6 +59,7 @@ router.post("/find_user", (req, res) => {
         messsage:
           "Searching failed, person not found, or u need more arguments",
       });
+    } else {
       res.status(200).json({
         userData: user,
       });
@@ -66,18 +67,7 @@ router.post("/find_user", (req, res) => {
   });
 });
 
-router.get("/logout", auth, (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.user._id },
-    { token: "", tokenExp: "" },
-    (err, doc) => {
-      if (err) return res.json({ success: false, err });
-      return res.status(200).send({
-        success: true,
-      });
-    }
-  );
-});
+
 
 router.get("/usersList", function (req, res) {
   User.find({}, function (err, users) {
